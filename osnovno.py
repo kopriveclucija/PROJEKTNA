@@ -6,7 +6,8 @@ class Model:
         self.naloge = []
 
     def dodaj_novo_nalogo(self, naloga):
-        self.naloge.append(naloga)
+        self.naloge.append(int(len(self.naloge)+1))
+        self.naloga = naloga
     #doda nalogo v __init__
     
 #class Naloga:
@@ -32,17 +33,15 @@ class Model:
 #    #katere naloge so resene (seznam)
 
 class Posameznanaloga:
-    def __init__(self, ime, besedilo, resitev):
+    def __init__(self, ime, besedilo, pravilna_resitev, moja_resitev=None):
         self.ime = ime
         self.besedilo = besedilo
-        self.resitev = resitev
-        self.resena = False
-
-    def opravi_nalogo(self):
-        self.resena = True
+        self.pravilna_resitev = pravilna_resitev
+        self.moja_resitev = moja_resitev
+        self.resena = (pravilna_resitev.lower == moja_resitev.lower)
 
     def resena_naloga(self):
-        return self.resena
+        return self.pravilna_resitev.lower == self.moja_resitev.lower
 
     def stevilo_resenih_nalog(self):
         stevilo = 0
