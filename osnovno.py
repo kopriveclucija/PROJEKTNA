@@ -1,19 +1,20 @@
 from datetime import date
 import json
 
+
 class Model:
     def __init__(self, zacetni_seznam_nalog, tema):
-        self.naloge = zacetni_seznam_nalog # Seznam objektov "Naloga"
+        self.naloge = zacetni_seznam_nalog  # Seznam objektov "Naloga"
         self.tema = tema
 
     def dodaj_novo_nalogo(self, naloga):
         self.naloge.append(naloga)
-    #doda nalogo v __init__
+    # doda nalogo v __init__
 
     def v_slovar(self):
 
         seznam_nalog = [
-            naloga.v_slovar() for naloga in self.naloge 
+            naloga.v_slovar() for naloga in self.naloge
         ]
 
         return {
@@ -21,14 +22,13 @@ class Model:
             "tema": self.tema,
         }
 
-
     @staticmethod
     def iz_slovarja(slovar):
         sez = [
             Naloga.iz_slovarja(sl_naloga) for sl_naloga in slovar["naloge"]
         ]
         return Model(
-            sez, 
+            sez,
             slovar["tema"],
 
         )
@@ -39,17 +39,17 @@ class Model:
             json.dump(slovar, dat)
 
     @staticmethod
-    def preberi_iz_datoteke(ime_datoteke):
+    def preberi_iz_datoteke(ime_datoteke='stanje.json'):
         with open(ime_datoteke) as dat:
             slovar = json.load(dat)
             return Model.iz_slovarja(slovar)
 
 
-#{
-#    "naloge": 
+# {
+#    "naloge":
 #        [{podatki naloge 1:}, {podatk naloge 2}, ..],
 #    "začetek": ...
-#}
+# }
 
 
 class Naloga:
@@ -68,7 +68,7 @@ class Naloga:
             if naloga.je_resena():
                 stevilo += 1
         return stevilo
-    #koliko nalog je resenih 
+    # koliko nalog je resenih
 
     def katere_naloge_so_resene(self):
         sez = []
@@ -76,7 +76,7 @@ class Naloga:
             if naloga.resena_naloga():
                 sez.append(naloga)
         return sez
-    #katere naloge so resene (seznam)
+    # katere naloge so resene (seznam)
 
     def v_slovar(self):
         return {
@@ -96,12 +96,17 @@ class Naloga:
         )
 
 
-n1 = Naloga("Napoleon", "Kdaj se je rodil", "Nekoč")
-n2 = Naloga('New York', "Kje lezi", "Amerika")
-n3 = Naloga('Olimpijske igra', "Kdo je osvoji zlato medaljo za Slovenijo", "Benjamin Savšek")
-n4 = Naloga('Olimpijske igra', "Kdo je osvoji zlato medaljo za Slovenijo", "Benjamin Savšek")
+n1 = Naloga("Napoleon", "Kdaj se je rodil?", "15.8.1769")
+n2 = Naloga('New York', "Kje lezi?", "Severna Amerika")
+n3 = Naloga('Olimpijske igra',
+            "Kdo je osvoji zlato medaljo za Slovenijo?", "Benjamin Savsek")
+n4 = Naloga(
+    'You Tube', "Kako je ime prvemu videu objavlenemu na You Tubu?", "Me at the ZOO")
+n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6")
+n6 = Naloga('Ameriski predsedniki',
+            "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington")
 
-seznam = [n1, n2, n3, n4]
+
+seznam = [n1, n2, n3, n4, n5, n6]
 
 m = Model(seznam, "test")
-
