@@ -33,7 +33,7 @@ class Model:
 
         )
 
-    def shrani_v_datoteko(self, ime_datoteke):
+    def shrani_v_datoteko(self, ime_datoteke='stanje.json'):
         with open(ime_datoteke, "w") as dat:
             slovar = self.v_slovar()
             json.dump(slovar, dat)
@@ -99,8 +99,9 @@ class Naloga:
 n1 = Naloga("Napoleon", "Kdaj se je rodil", "Nekoč")
 n2 = Naloga('New York', "Kje lezi", "Amerika")
 n3 = Naloga('Olimpijske igra', "Kdo je osvoji zlato medaljo za Slovenijo", "Benjamin Savšek")
+n4 = Naloga('Olimpijske igra', "Kdo je osvoji zlato medaljo za Slovenijo", "Benjamin Savšek")
 
-seznam = [n1, n2, n3]
+seznam = [n1, n2, n3, n4]
 
 m = Model(seznam, "test")
 
