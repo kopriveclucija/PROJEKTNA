@@ -1,1 +1,28 @@
-<h1>Osnovna stran</h1>
+<html>
+    <body>
+        <h1>Osnovna stran</h1>
+        % if resenih == 0:
+        Do sedaj ni rešene še nobene naloge.
+        % elif stevilo_nalog == resenih:
+        Rešene so vse naloge.
+        % else:
+        %   if resenih == 1:
+                Trenutno je rešena {{resenih}} naloga.
+        %   elif resenih == 2:
+                Trenutno sta rešeni {{resenih}} nalogi.
+        %   elif resenih == 3 or resenih == 4:
+                Trenutno so rešene {{resenih}} naloge.
+        %   else:
+                Trenutno je rešenih {{resenih}} nalog.
+        % end
+        % end
+        <h3>Dodajanje k nalogam</h3>
+
+        <form method='POST' action="/dodaj/">
+            ime: <input type="text" name='ime'>
+            besedilo: <input type="text" name='besedilo'>
+            rešitev: <input type="text" name='resitev'>
+            <input type="submit" value="dodaj">
+        </form>
+    </body>
+</html>
