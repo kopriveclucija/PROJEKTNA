@@ -1,15 +1,14 @@
 from datetime import date
 import json
 
-
 class Model:
     def __init__(self, zacetni_seznam_nalog, tema):
         self.naloge = zacetni_seznam_nalog  # Seznam objektov "Naloga"
+        self.aktualna_naloga = None
         self.tema = tema
 
     def dodaj_novo_nalogo(self, naloga):
         self.naloge.append(naloga)
-    # doda nalogo v __init__
 
     def v_slovar(self):
 
@@ -22,6 +21,25 @@ class Model:
             "tema": self.tema,
         }
 
+    def stevilo_opravljenih_nalog(self):
+        stevilo = 0
+        for naloga in self.naloge:
+            if naloga.naloga_je_resena():
+                stevilo += 1
+        return stevilo
+
+    def katere_naloge_so_resene(self):
+        sez = []
+        for naloga in self.naloge:
+            if naloga.naloga_je_resena():
+                sez.append(naloga["besedilo"])
+        return sez
+    #katere naloge so resene (seznam)
+
+    def stevilo_vseh_nalog(self):
+        return len(self.naloge)
+
+            
     @staticmethod
     def iz_slovarja(slovar):
         sez = [
@@ -59,24 +77,8 @@ class Naloga:
         self.pravilna_resitev = pravilna_resitev
         self.moja_resitev = moja_resitev
 
-    def je_resena(self):
-        return self.pravilna_resitev.lower() == self.moja_resitev.lower()
-
-    def stevilo_resenih_nalog(self):
-        stevilo = 0
-        for naloga in self.naloge:
-            if naloga.je_resena():
-                stevilo += 1
-        return stevilo
-    # koliko nalog je resenih
-
-    def katere_naloge_so_resene(self):
-        sez = []
-        for naloga in self.naloge:
-            if naloga.resena_naloga():
-                sez.append(naloga)
-        return sez
-    # katere naloge so resene (seznam)
+    def naloga_je_resena(self):
+        return self.pravilna_resitev == self.moja_resitev
 
     def v_slovar(self):
         return {
@@ -101,12 +103,51 @@ n2 = Naloga('New York', "Kje lezi?", "Severna Amerika")
 n3 = Naloga('Olimpijske igra',
             "Kdo je osvoji zlato medaljo za Slovenijo?", "Benjamin Savsek")
 n4 = Naloga(
-    'You Tube', "Kako je ime prvemu videu objavlenemu na You Tubu?", "Me at the ZOO")
-n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6")
+    'You Tube', "Kako je ime prvemu videu objavlenemu na You Tubu?", "Me at the ZOO", "Me at the ZOO")
+n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6", "6")
 n6 = Naloga('Ameriski predsedniki',
-            "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington")
+            "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington", "George Washington")
 
 
 seznam = [n1, n2, n3, n4, n5, n6]
 
 m = Model(seznam, "test")
+n = m.preberi_iz_datoteke()
+#IME_DATOTEKE = "stanje.json"
+#try:
+#    moj_model = Model.preberi_iz_datoteke(IME_DATOTEKE)
+#except FileNotFoundError:
+#    moj_model = Model()
+
+
+
+        #def je_resena(self):
+    #    return self.pravilna_resitev.lower == self.moja_resitev.lower
+#
+    #def stevilo_resenih_nalog(self):
+    #    stevilo = 0
+    #    for naloga in self.naloge:
+    #        if naloga.je_resena():
+    #            stevilo += 1
+    #    return sum([])
+
+
+
+    #def je_resena(self):
+    #    return self.pravilna_resitev == self.moja_resitev
+
+    #def stevilo_resenih_nalog(self):
+    #    stevilo = 0
+    #    for naloga in self.naloge:
+    #        if naloga.je_resena():
+    #            stevilo += 1
+    #    return sum([])
+    ## koliko nalog je resenih
+
+    #def katere_naloge_so_resene(self):
+    #    sez = []
+    #    for naloga in self.naloge:
+    #        if naloga.naloga_je_resena():
+    #            sez.append(naloga)
+    #    return sez
+    ##katere naloge so resene (seznam)
