@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projektna naloga</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body> 
+  <nav class="navbar is-light">
+    <div class="container">
+      <div class="navbar-brand">
+        <span class="navbar-item">
+            <span class="icon is-medium">
+                <span class="fa-stack fa-sm">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
+                </span>
+              </span>
+            <a class="navbar-item" >
+              <form method="POST" action="/">
+                <button class="button is-light">
+                  <strong>O projektni nalogi</strong>
+                </button>
+              </form>
+            </a>
+          </span>
+      </div>
+      <div class="navbar-brand">
+        <span class="navbar-item">
+          <span class="icon">
+            <i class="fas fa-clipboard-check"></i>
+          </span>
+          <a class="navbar-item" >
+            <form method="POST" action="/pregled_nalog/">
+              <button class="button is-light">
+                <strong>Naloge</strong>
+              </button>
+            </form>
+          </a>
+        </span>
+      </div>
+    </div>
+  </nav>
+%for naloga in vse_naloge:
+<form method="POST" action="/posamezna_naloga/">
+    <button class="button is-light">
+      <strong>{{naloga.ime}}</strong>
+    </button>
+</form>
+%end
+<form method="POST" action="/dodaj/">
+    <button class="button is-light">
+      <strong>DODAJ NOVO NALOGO</strong>
+    </button>
+</form>
+</body>
+
+  
+
+
+</html>
+

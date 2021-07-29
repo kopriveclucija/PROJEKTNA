@@ -62,6 +62,14 @@ class Model:
             slovar = json.load(dat)
             return Model.iz_slovarja(slovar)
 
+    def preveri_podatke_nove_naloge(self, ime):
+        napake = {}
+        if not ime:
+            napake['ime'] = 'Ime ne sme bitit prazno!'
+        elif len(ime) > 20:
+            napake['ime'] = 'Ime lahko vsebuje najvec 20 znakov.'
+        return napake
+
 
 # {
 #    "naloge":
@@ -109,45 +117,3 @@ n6 = Naloga('Ameriski predsedniki',
             "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington", "George Washington")
 
 
-seznam = [n1, n2, n3, n4, n5, n6]
-
-m = Model(seznam, "test")
-n = m.preberi_iz_datoteke()
-#IME_DATOTEKE = "stanje.json"
-#try:
-#    moj_model = Model.preberi_iz_datoteke(IME_DATOTEKE)
-#except FileNotFoundError:
-#    moj_model = Model()
-
-
-
-        #def je_resena(self):
-    #    return self.pravilna_resitev.lower == self.moja_resitev.lower
-#
-    #def stevilo_resenih_nalog(self):
-    #    stevilo = 0
-    #    for naloga in self.naloge:
-    #        if naloga.je_resena():
-    #            stevilo += 1
-    #    return sum([])
-
-
-
-    #def je_resena(self):
-    #    return self.pravilna_resitev == self.moja_resitev
-
-    #def stevilo_resenih_nalog(self):
-    #    stevilo = 0
-    #    for naloga in self.naloge:
-    #        if naloga.je_resena():
-    #            stevilo += 1
-    #    return sum([])
-    ## koliko nalog je resenih
-
-    #def katere_naloge_so_resene(self):
-    #    sez = []
-    #    for naloga in self.naloge:
-    #        if naloga.naloga_je_resena():
-    #            sez.append(naloga)
-    #    return sez
-    ##katere naloge so resene (seznam)
