@@ -20,7 +20,7 @@
                     </span>
                   </span>
                 <a class="navbar-item" >
-                  <form method="POST" action="/">
+                  <form method="GET" action="/">
                     <button class="button is-light">
                       <strong>O projektni nalogi</strong>
                     </button>
@@ -42,13 +42,35 @@
               </a>
             </span>
           </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                % if uporabnisko_ime:
+                <form method="POST" action="/odjava/">
+                  <button class="button is-light">
+                    Odjavi se
+                  </button>
+                </form>
+                % else:
+                <a class="button is-primary" href="/registracija/">
+                  <strong>Registriraj se</strong>
+                </a>
+                <a class="button is-info" href="/prijava/">
+                  <strong>Prijavi se</strong>
+                </a>
+                % end
+              </div>
+            </div>
+           
         </div>
       </nav>
-      %for naloga in vse_naloge:
-          <button class="button is-light">
-            <strong>{{naloga.ime}}</strong>
-          </button>
-      %end
+      <p style="margin-left: 50px; margin-top: 10px;">  
+        %for naloga in vse_naloge:
+                <button class="button is-danger">
+                    <strong>{{naloga.ime}}</strong>
+                </button>
+        %end
+        </p>
 <form method="POST" action="/dodaj/">
     <button class="button is-light">
       <strong>DODAJ NOVO NALOGO</strong>
@@ -75,9 +97,6 @@
                 <i class="fas fa-clipboard-check"></i>
             </span>
         </div>
-        % if "besedilo" in napake:
-        <p class="help is-danger">{{ napake["besedilo"] }}</p>
-        % end
     </div>
     <div class="field">
         <label class="label">Resitev</label>
@@ -87,14 +106,14 @@
                 <i class="fas fa-clipboard-check"></i>
             </span>
         </div>
-        % if "resitev" in napake:
-        <p class="help is-danger">{{ napake["resitev"] }}</p>
-        % end
     </div>
     <div class="field is-grouped">
         <div class="control">
             <button class="button is-link">Dodaj</button>
         </div>
+        <div class="control">
+          <a class="button is-link is-light" href="/">Prekliči</a>
+      </div>
  
     </div>
 </form>

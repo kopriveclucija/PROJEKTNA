@@ -8,35 +8,32 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
-
-<body>
-
-
+<body> 
   <nav class="navbar is-light">
     <div class="container">
       <div class="navbar-brand">
         <span class="navbar-item">
-          <span class="icon is-medium">
-            <span class="fa-stack fa-sm">
-              <i class="fas fa-circle fa-stack-2x"></i>
-              <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
-            </span>
+            <span class="icon is-medium">
+                <span class="fa-stack fa-sm">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
+                </span>
+              </span>
+            <a class="navbar-item" >
+              <form method="POST" action="/">
+                <button class="button is-light">
+                  <strong>O projektni nalogi</strong>
+                </button>
+              </form>
+            </a>
           </span>
-          <a class="navbar-item">
-            <form method="GET" action="/">
-              <button class="button is-light">
-                <strong>O projektni nalogi</strong>
-              </button>
-            </form>
-          </a>
-        </span>
       </div>
       <div class="navbar-brand">
         <span class="navbar-item">
           <span class="icon">
             <i class="fas fa-clipboard-check"></i>
           </span>
-          <a class="navbar-item">
+          <a class="navbar-item" >
             <form method="POST" action="/pregled_nalog/">
               <button class="button is-light">
                 <strong>Naloge</strong>
@@ -59,18 +56,19 @@
               <strong>Registriraj se</strong>
             </a>
             <a class="button is-info" href="/prijava/">
-              <strong>Prijavi se</strong>
+                <strong>Prijavi se</strong>
             </a>
             % end
           </div>
         </div>
-       
     </div>
   </nav>
-
-<div style="margin: 10px; margin-left: 100px; margin-right: 100px; max-width: 50%">Pri predmetu uvod v programiranje sem naredila projektno nalogo. Na zavihku NALOGE se vam
-    bodo prikazale že narejene nalogo. Če si želite posamezno nalogo ogledati, kliknite nanjo in prikazalo se bo
-    besedilo naloge.</div>
+<p style="margin-left: 50px; margin-top: 10px;">  
+    %for naloga in vse_naloge:
+            <button class="button is-danger">
+                <strong>{{naloga.ime}}</strong>
+            </button>
+    %end
+</p>
 </body>
-
 </html>

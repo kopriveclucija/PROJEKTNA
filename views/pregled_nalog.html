@@ -20,7 +20,7 @@
                 </span>
               </span>
             <a class="navbar-item" >
-              <form method="POST" action="/">
+              <form method="GET" action="/">
                 <button class="button is-light">
                   <strong>O projektni nalogi</strong>
                 </button>
@@ -42,15 +42,35 @@
           </a>
         </span>
       </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            % if uporabnisko_ime:
+            <form method="POST" action="/odjava/">
+              <button class="button is-light">
+                Odjavi se
+              </button>
+            </form>
+            % else:
+            <a class="button is-primary" href="/registracija/">
+              <strong>Registriraj se</strong>
+            </a>
+            <a class="button is-info" href="/prijava/">
+                <strong>Prijavi se</strong>
+            </a>
+            % end
+          </div>
+        </div>
+       
     </div>
   </nav>
+<p style="margin-left: 50px; margin-top: 10px;">  
 %for naloga in vse_naloge:
-<form method="POST" action="/posamezna_naloga/">
-    <button class="button is-light">
-      <strong>{{naloga.ime}}</strong>
-    </button>
-</form>
+        <button class="button is-danger">
+            <strong>{{naloga.ime}}</strong>
+        </button>
 %end
+</p>
 <form method="POST" action="/dodaj/">
     <button class="button is-light">
       <strong>DODAJ NOVO NALOGO</strong>
@@ -62,4 +82,3 @@
 
 
 </html>
-

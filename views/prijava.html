@@ -8,35 +8,32 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
-
-<body>
-
-
+<body> 
   <nav class="navbar is-light">
     <div class="container">
       <div class="navbar-brand">
         <span class="navbar-item">
-          <span class="icon is-medium">
-            <span class="fa-stack fa-sm">
-              <i class="fas fa-circle fa-stack-2x"></i>
-              <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
-            </span>
+            <span class="icon is-medium">
+                <span class="fa-stack fa-sm">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
+                </span>
+              </span>
+            <a class="navbar-item" >
+              <form method="GET" action="/">
+                <button class="button is-light">
+                  <strong>O projektni nalogi</strong>
+                </button>
+              </form>
+            </a>
           </span>
-          <a class="navbar-item">
-            <form method="GET" action="/">
-              <button class="button is-light">
-                <strong>O projektni nalogi</strong>
-              </button>
-            </form>
-          </a>
-        </span>
       </div>
       <div class="navbar-brand">
         <span class="navbar-item">
           <span class="icon">
             <i class="fas fa-clipboard-check"></i>
           </span>
-          <a class="navbar-item">
+          <a class="navbar-item" >
             <form method="POST" action="/pregled_nalog/">
               <button class="button is-light">
                 <strong>Naloge</strong>
@@ -59,7 +56,7 @@
               <strong>Registriraj se</strong>
             </a>
             <a class="button is-info" href="/prijava/">
-              <strong>Prijavi se</strong>
+                <strong>Prijavi se</strong>
             </a>
             % end
           </div>
@@ -67,10 +64,25 @@
        
     </div>
   </nav>
-
-<div style="margin: 10px; margin-left: 100px; margin-right: 100px; max-width: 50%">Pri predmetu uvod v programiranje sem naredila projektno nalogo. Na zavihku NALOGE se vam
-    bodo prikazale že narejene nalogo. Če si želite posamezno nalogo ogledati, kliknite nanjo in prikazalo se bo
-    besedilo naloge.</div>
+<form method="POST">
+    <div class="field">
+        <label class="label">Uporabniško ime</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input" name="uporabnisko_ime" type="text" placeholder="uporabniško ime" value="{{polja.get('uporabnisko_ime', '')}}">
+            <span class="icon is-small is-left">
+                <i class="fas fa-clipboard-check"></i>
+            </span>
+        </div>
+        % if "uporabnisko_ime" in napake:
+        <p class="help is-danger">{{ napake["uporabnisko_ime"] }}</p>
+        % end
+    </div>
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-link">Prijavi se</button>
+        </div>
+    </div>
+</form>
 </body>
 
 </html>
