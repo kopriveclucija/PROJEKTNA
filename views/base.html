@@ -22,13 +22,13 @@
               <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
             </span>
           </span>
-          <a class="navbar-item">
-            <form method="GET" action="/">
+          <span class="navbar-item">
+            <a href="/">
               <button class="button is-light">
                 <strong>O projektni nalogi</strong>
               </button>
-            </form>
-          </a>
+            </a>
+          </span>
         </span>
       </div>
       <div class="navbar-brand">
@@ -36,13 +36,13 @@
           <span class="icon">
             <i class="fas fa-clipboard-check"></i>
           </span>
-          <a class="navbar-item">
-            <form method="POST" action="/pregled_nalog/">
+          <span class="navbar-item">
+            <a href="/pregled_nalog/">
               <button class="button is-light">
                 <strong>Naloge</strong>
               </button>
-            </form>
-          </a>
+            </a>
+          </span>
         </span>
       </div>
       <div class="navbar-end">
@@ -50,8 +50,8 @@
           <div class="buttons">
             % if uporabnisko_ime:
             <form method="POST" action="/odjava/">
-              <button class="button is-light">
-                Odjavi se
+              <button class="button is-info">
+                <strong>Odjavi se</strong>
               </button>
             </form>
             % else:
@@ -64,7 +64,6 @@
             % end
           </div>
         </div>
-       
     </div>
   </nav>
 

@@ -8,38 +8,41 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
-<body> 
+
+<body>
+
+
   <nav class="navbar is-light">
     <div class="container">
       <div class="navbar-brand">
         <span class="navbar-item">
-            <span class="icon is-medium">
-                <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
-                </span>
-              </span>
-            <a class="navbar-item" >
-              <form method="GET" action="/">
-                <button class="button is-light">
-                  <strong>O projektni nalogi</strong>
-                </button>
-              </form>
+          <span class="icon is-medium">
+            <span class="fa-stack fa-sm">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
+            </span>
+          </span>
+          <span class="navbar-item">
+            <a href="/">
+              <button class="button is-light">
+                <strong>O projektni nalogi</strong>
+              </button>
             </a>
           </span>
+        </span>
       </div>
       <div class="navbar-brand">
         <span class="navbar-item">
           <span class="icon">
             <i class="fas fa-clipboard-check"></i>
           </span>
-          <a class="navbar-item" >
-            <form method="POST" action="/pregled_nalog/">
+          <span class="navbar-item">
+            <a href="/pregled_nalog/">
               <button class="button is-light">
                 <strong>Naloge</strong>
               </button>
-            </form>
-          </a>
+            </a>
+          </span>
         </span>
       </div>
       <div class="navbar-end">
@@ -47,8 +50,8 @@
           <div class="buttons">
             % if uporabnisko_ime:
             <form method="POST" action="/odjava/">
-              <button class="button is-light">
-                Odjavi se
+              <button class="button is-info">
+                <strong>Odjavi se</strong>
               </button>
             </form>
             % else:
@@ -56,12 +59,11 @@
               <strong>Registriraj se</strong>
             </a>
             <a class="button is-info" href="/prijava/">
-                <strong>Prijavi se</strong>
+              <strong>Prijavi se</strong>
             </a>
             % end
           </div>
         </div>
-       
     </div>
   </nav>
 <form method="POST">
