@@ -1,8 +1,7 @@
-from datetime import date
 import json
 
 class Model:
-    def __init__(self, zacetni_seznam_nalog, tema):
+    def __init__(self, zacetni_seznam_nalog, tema=''):
         self.naloge = zacetni_seznam_nalog  # Seznam objektov "Naloga"
         self.aktualna_naloga = None
         self.tema = tema
@@ -11,11 +10,9 @@ class Model:
         self.naloge.append(naloga)
 
     def v_slovar(self):
-
         seznam_nalog = [
             naloga.v_slovar() for naloga in self.naloge
         ]
-
         return {
             "naloge": seznam_nalog,
             "tema": self.tema,
@@ -38,7 +35,6 @@ class Model:
 
     def stevilo_vseh_nalog(self):
         return len(self.naloge)
-
             
     @staticmethod
     def iz_slovarja(slovar):
@@ -51,7 +47,7 @@ class Model:
 
         )
 
-    def shrani_v_datoteko(self, ime_datoteke='stanje.json'):
+    def shrani_v_datoteko(self, ime_datoteke='stanje.json'):        
         with open(ime_datoteke, "w") as dat:
             slovar = self.v_slovar()
             json.dump(slovar, dat)
@@ -70,13 +66,18 @@ class Model:
             napake['ime'] = 'Ime lahko vsebuje najvec 20 znakov.'
         return napake
 
-
-# {
-#    "naloge":
-#        [{podatki naloge 1:}, {podatk naloge 2}, ..],
-#    "začetek": ...
-# }
-
+    @staticmethod
+    def naredi_svezega():
+        n1 = Naloga("Napoleon", "Kdaj se je rodil?", "15.8.1769")
+        n2 = Naloga('New York', "Kje lezi?", "Severna Amerika")
+        n3 = Naloga('Olimpijske igre', "Kdo je osvoji zlato medaljo za Slovenijo?", "Benjamin Savsek")
+        n4 = Naloga('You Tube', "Kako je ime prvemu videu objavlenemu na You Tubu?", "Me at the ZOO", "Me at the ZOO")
+        n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6", "6")
+        n6 = Naloga('Ameriski predsedniki',
+            "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington", "George Washington")
+        seznam = [n1, n2, n3, n4, n5, n6]
+        m = Model(seznam, "test")
+        return m
 
 class Naloga:
     def __init__(self, ime, besedilo, pravilna_resitev, moja_resitev=None):
@@ -115,5 +116,143 @@ n4 = Naloga(
 n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6", "6")
 n6 = Naloga('Ameriski predsedniki',
             "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington", "George Washington")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

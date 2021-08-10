@@ -2,12 +2,6 @@ import bottle
 import os
 from osnovno import Model, Naloga
 
-IME_DATOTEKE = "stanje.json"
-try:
-    moj_model = Model.preberi_iz_datoteke(IME_DATOTEKE)
-except FileNotFoundError:
-    moj_model = Model([], '')
-
 
 def nalozi_uporabnikovo_stanje():
     uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime")
@@ -21,14 +15,13 @@ def shrani_uporabnikovo_stanje(stanje):
     uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime")
     stanje.shrani_v_datoteko(uporabnisko_ime)
 
+
 @bottle.get('/')
 def osnovna_stran():
-    uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
     model = nalozi_uporabnikovo_stanje()
-    moj_model = Model.preberi_iz_datoteke(IME_DATOTEKE)
     return bottle.template('base.html',
-     resenih=model.stevilo_opravljenih_nalog(),
-      stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime"))
+                           resenih=model.stevilo_opravljenih_nalog(),
+                           stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
 
 
 @bottle.get("/registracija/")
@@ -38,20 +31,22 @@ def registracija_get():
 
 @bottle.post("/registracija/")
 def registracija_post():
-    print("H")
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
     if os.path.exists(uporabnisko_ime):
         napake = {"uporabnisko_ime": "Uporabniško ime že obstaja."}
         return bottle.template("registracija.html", napake=napake, polja={"uporabnisko_ime": uporabnisko_ime}, uporabnisko_ime=None)
     else:
-        bottle.response.set_cookie("uporabnisko_ime", uporabnisko_ime, path="/")
+        bottle.response.set_cookie(
+            "uporabnisko_ime", uporabnisko_ime, path="/")
         model = Model.naredi_svezega()
         model.shrani_v_datoteko(uporabnisko_ime)
         bottle.redirect("/")
 
+
 @bottle.get("/prijava/")
 def prijava_get():
     return bottle.template("prijava.html", napake={}, polja={}, uporabnisko_ime=None)
+
 
 @bottle.post("/prijava/")
 def prijava_post():
@@ -61,17 +56,17 @@ def prijava_post():
         napake = {"uporabnisko_ime": "Uporabniško ime ne obstaja."}
         return bottle.template("prijava.html", napake=napake, polja={"uporabnisko_ime": uporabnisko_ime}, uporabnisko_ime=None)
     else:
-        bottle.response.set_cookie("uporabnisko_ime", uporabnisko_ime, path="/")
+        bottle.response.set_cookie(
+            "uporabnisko_ime", uporabnisko_ime, path="/")
         bottle.redirect("/")
-
 
 
 @bottle.post("/odjava/")
 def odjava_post():
     bottle.response.delete_cookie("uporabnisko_ime", path="/")
-    print("piškotek uspešno pobrisan")
     bottle.redirect("/")
- 
+
+
 @bottle.post('/dodaj/')
 def dodaj_novo_nalogo():
     model = nalozi_uporabnikovo_stanje()
@@ -82,7 +77,7 @@ def dodaj_novo_nalogo():
     napake = model.preveri_podatke_nove_naloge(ime)
     if napake:
         return bottle.template('dodaj_nalogo.html', napake=napake, polja=polja, resenih=model.stevilo_opravljenih_nalog(),
-      stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime"))
+                               stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
     else:
         naloga = Naloga(ime, besedilo, resitev)
         model.dodaj_novo_nalogo(naloga)
@@ -90,33 +85,27 @@ def dodaj_novo_nalogo():
     bottle.redirect("/pregled_nalog/")
 
 
-@bottle.get('/uspesno-dodajanje/')
-def uspesno_dodajanje():
-    return 'Uspešno si dodal.'
-
 @bottle.get('/pregled_nalog/')
 def vse_naloge_na_strani():
     model = nalozi_uporabnikovo_stanje()
     return bottle.template('pregled_nalog.html',
-     resenih=model.stevilo_opravljenih_nalog(),
-      stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime"))
+                           resenih=model.stevilo_opravljenih_nalog(),
+                           stevilo_nalog=len(model.naloge), vse_naloge=model.naloge,
+                           uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
 
 
 @bottle.post('/preklici/')
 def preklici():
     bottle.redirect("/pregled_nalog/")
 
-@bottle.post("/posamezna_naloga/<picture>")
-def server(picture):
-    return bottle.static_file(picture, root = 'img')  
-#def posamezna_naloga():
-#    model = nalozi_uporabnikovo_stanje()
-#    moj_model = Model.preberi_iz_datoteke(IME_DATOTEKE)
-#    return bottle.template('posamezna_naloga.html',
-#     resenih=model.stevilo_opravljenih_nalog(),
-#      stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime"))
+
+@bottle.get("/posamezna_naloga/<ud:int>")
+def posamezna_naloga(ud):
+    model = nalozi_uporabnikovo_stanje()
+    moja_resitev = bottle.request.forms.getunicode('moje_resitev')
+    naloga = model.naloge[ud]
+    polja = {'moja resitev': moja_resitev}
+    return bottle.template('posamezna_naloga.html', naloga=naloga,  polja=polja, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), vse_naloge=model.naloge,)
 
 
 bottle.run(reloader=True, debug=True)
-
-

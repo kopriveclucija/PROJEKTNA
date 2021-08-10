@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,10 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
-
 <body>
-
-
   <nav class="navbar is-light">
     <div class="container">
       <div class="navbar-brand">
@@ -66,16 +62,21 @@
         </div>
     </div>
   </nav>
+  <div style="margin: 10px; margin-left: 100px; margin-right: 100px; max-width: 50%;">
+  <h1 class="tabs is-parent" style="font-weight: bold; text-transform: uppercase">{{naloga.ime}}</h1>
+  <p>{{naloga.besedilo}}</p>
+  <div class="field">
+    <div class="control has-icons-left has-icons-right">
+        <input class="input" name="pravilna rešitev" type="text" placeholder="pravilna rešitev" value="{{polja.get('moja resitev', '')}}" >
+        <span class="icon is-small is-left">
+            <i class="fas fa-clipboard-check"></i>
+        </span>
+    </div>
+</div>
+  <div class="control">
+      <button class="button is-link">Reši</button>
+  </div>
 
-  <p style="margin-left: 50px; margin-top: 10px;">  
-    %for ud, naloga in enumerate(vse_naloge):
-            <button class="button is-danger">
-                <a href="/posamezna_naloga/{{ud}}"><strong>{{naloga.ime}}</strong></a>
-            </button>
-    %end
-    </p>
-  <tr>
-    <td> <img src="/img/{{igra.stevilo_napak(ud)}}.jpg" alt="obesanje"></td>
-</tr> 
+</div>
 </body>
 </html>
