@@ -1,8 +1,9 @@
 import json
 
+
 class Model:
     def __init__(self, zacetni_seznam_nalog, tema=''):
-        self.naloge = zacetni_seznam_nalog  # Seznam objektov "Naloga"
+        self.naloge = zacetni_seznam_nalog 
         self.aktualna_naloga = None
         self.tema = tema
 
@@ -18,24 +19,6 @@ class Model:
             "tema": self.tema,
         }
 
-    def stevilo_opravljenih_nalog(self):
-        stevilo = 0
-        for naloga in self.naloge:
-            if naloga.naloga_je_resena():
-                stevilo += 1
-        return stevilo
-
-    def katere_naloge_so_resene(self):
-        sez = []
-        for naloga in self.naloge:
-            if naloga.naloga_je_resena():
-                sez.append(naloga["besedilo"])
-        return sez
-    #katere naloge so resene (seznam)
-
-    def stevilo_vseh_nalog(self):
-        return len(self.naloge)
-            
     @staticmethod
     def iz_slovarja(slovar):
         sez = [
@@ -47,7 +30,7 @@ class Model:
 
         )
 
-    def shrani_v_datoteko(self, ime_datoteke='stanje.json'):        
+    def shrani_v_datoteko(self, ime_datoteke='stanje.json'):
         with open(ime_datoteke, "w") as dat:
             slovar = self.v_slovar()
             json.dump(slovar, dat)
@@ -70,14 +53,17 @@ class Model:
     def naredi_svezega():
         n1 = Naloga("Napoleon", "Kdaj se je rodil?", "15.8.1769")
         n2 = Naloga('New York', "Kje lezi?", "Severna Amerika")
-        n3 = Naloga('Olimpijske igre', "Kdo je osvoji zlato medaljo za Slovenijo?", "Benjamin Savsek")
-        n4 = Naloga('You Tube', "Kako je ime prvemu videu objavlenemu na You Tubu?", "Me at the ZOO", "Me at the ZOO")
-        n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6", "6")
+        n3 = Naloga('Olimpijske igre',
+                    "Kdo je osvoji zlato medaljo za Slovenijo?", "Benjamin Savsek")
+        n4 = Naloga(
+            'You Tube', "Kako je ime prvemu videu objavlenemu na You Tubu?", "Me at the ZOO")
+        n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6")
         n6 = Naloga('Ameriski predsedniki',
-            "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington", "George Washington")
+                    "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington")
         seznam = [n1, n2, n3, n4, n5, n6]
         m = Model(seznam, "test")
         return m
+
 
 class Naloga:
     def __init__(self, ime, besedilo, pravilna_resitev, moja_resitev=None):
@@ -87,7 +73,7 @@ class Naloga:
         self.moja_resitev = moja_resitev
 
     def naloga_je_resena(self):
-        return self.pravilna_resitev == self.moja_resitev
+        return self.moja_resitev and self.pravilna_resitev.lower().strip() == self.moja_resitev.lower().strip()
 
     def v_slovar(self):
         return {
@@ -105,154 +91,3 @@ class Naloga:
             slovar["pravilna resitev"],
             slovar["moja resitev"],
         )
-
-
-n1 = Naloga("Napoleon", "Kdaj se je rodil?", "15.8.1769")
-n2 = Naloga('New York', "Kje lezi?", "Severna Amerika")
-n3 = Naloga('Olimpijske igra',
-            "Kdo je osvoji zlato medaljo za Slovenijo?", "Benjamin Savsek")
-n4 = Naloga(
-    'You Tube', "Kako je ime prvemu videu objavlenemu na You Tubu?", "Me at the ZOO", "Me at the ZOO")
-n5 = Naloga('Kardashianovi', "Koliko otrok ima Kris Jenner?", "6", "6")
-n6 = Naloga('Ameriski predsedniki',
-            "Kako je bilo ima prvemu ameriskemu predsedniku?", "George Washington", "George Washington")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

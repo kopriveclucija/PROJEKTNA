@@ -19,9 +19,7 @@ def shrani_uporabnikovo_stanje(stanje):
 @bottle.get('/')
 def osnovna_stran():
     model = nalozi_uporabnikovo_stanje()
-    return bottle.template('base.html',
-                           resenih=model.stevilo_opravljenih_nalog(),
-                           stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
+    return bottle.template('base.html', vse_naloge=model.naloge, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
 
 
 @bottle.get("/registracija/")
@@ -76,8 +74,7 @@ def dodaj_novo_nalogo():
     polja = {'ime': ime}
     napake = model.preveri_podatke_nove_naloge(ime)
     if napake:
-        return bottle.template('dodaj_nalogo.html', napake=napake, polja=polja, resenih=model.stevilo_opravljenih_nalog(),
-                               stevilo_nalog=len(model.naloge), vse_naloge=model.naloge, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
+        return bottle.template('dodaj_nalogo.html', napake=napake, polja=polja, vse_naloge=model.naloge, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
     else:
         naloga = Naloga(ime, besedilo, resitev)
         model.dodaj_novo_nalogo(naloga)
@@ -88,9 +85,7 @@ def dodaj_novo_nalogo():
 @bottle.get('/pregled_nalog/')
 def vse_naloge_na_strani():
     model = nalozi_uporabnikovo_stanje()
-    return bottle.template('pregled_nalog.html',
-                           resenih=model.stevilo_opravljenih_nalog(),
-                           stevilo_nalog=len(model.naloge), vse_naloge=model.naloge,
+    return bottle.template('pregled_nalog.html', vse_naloge=model.naloge,
                            uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"))
 
 
@@ -100,7 +95,7 @@ def preklici():
 
 
 @bottle.get("/posamezna_naloga/<ud:int>")
-def posamezna_naloga(ud):
+def posamezna_naloga_prikaz(ud):
     model = nalozi_uporabnikovo_stanje()
     moja_resitev = bottle.request.forms.getunicode('moje_resitev')
     naloga = model.naloge[ud]
@@ -108,4 +103,16 @@ def posamezna_naloga(ud):
     return bottle.template('posamezna_naloga.html', naloga=naloga,  polja=polja, uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"), vse_naloge=model.naloge,)
 
 
+@bottle.post("/posamezna_naloga/<ud:int>")
+def posamezna_naloga_resi(ud):
+    model = nalozi_uporabnikovo_stanje()
+    moja_resitev = bottle.request.forms.getunicode('moja-resitev')
+    naloga = model.naloge[ud]
+    naloga.moja_resitev = moja_resitev
+    model.shrani_v_datoteko(bottle.request.get_cookie("uporabnisko_ime"))
+
+    bottle.redirect(f"/posamezna_naloga/{ud}")
+
+
 bottle.run(reloader=True, debug=True)
+

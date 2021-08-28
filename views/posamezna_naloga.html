@@ -65,7 +65,7 @@
       </div>
   </nav>  
   <div style="margin: 10px; margin-left: 100px; margin-right: 100px; max-width: 50%;">
-    %if naloga.moja_resitev == naloga.pravilna_resitev:
+    %if naloga.naloga_je_resena():
     <h1 class="tabs is-parent" style="font-weight: bold; text-transform: uppercase">{{naloga.ime}}</h1>
     <p>{{naloga.besedilo}}</p>
     <p>Nalogo si rešil pravilno. Rešitev: {{naloga.pravilna_resitev}}.</p>
@@ -74,22 +74,16 @@
     <p>{{naloga.besedilo}}</p>
     <div class="field">
       <div class="control has-icons-left has-icons-right">
-        <input class="input" name="moja rešitev" type="text" placeholder="moja rešitev"
-          value="{{polja.get('moja resitev', '')}}">
-        <span class="icon is-small is-left">
-          <i class="fas fa-clipboard-check"></i>
-        </span>
+        <form method="POST">
+        <input class="input" name="moja-resitev" type="text" placeholder="moja resitev">
+        <input type="submit">
+        </form>
       </div>
       %if len("moja rešitev") != 0 and naloga.moja_resitev != naloga.pravilna_resitev:
       <p class="help is-danger">Rešitev ni pravilna.</p>
       %elif "moja resitev" == naloga.pravilna_resitev:
       <p>bravo</p>
       %end
-    </div>
-    <div class="field is-grouped">
-      <div class="control">
-          <button class="button is-link">Reši</button>
-      </div>
     </div>
 
 

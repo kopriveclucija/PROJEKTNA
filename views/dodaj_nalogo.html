@@ -66,22 +66,30 @@
         </div>
     </div>
   </nav>
-  <p style="margin-left: 50px; margin-top: 10px;">  
+  <p style="margin-left: 50px; margin-top: 10px;">
     %for ud, naloga in enumerate(vse_naloge):
-            <button class="button is-danger">
-                <a href="/posamezna_naloga/{{ud}}"><strong>{{naloga.ime}}</strong></a>
-            </button>
+      %if naloga.naloga_je_resena():
+        <button class="button is-danger">
+          <a href="/posamezna_naloga/{{ud}}"><strong>{{naloga.ime}}</strong></a>
+        </button>
+      %else:
+        <button class="button is-primary">
+          <a href="/posamezna_naloga/{{ud}}"><strong>{{naloga.ime}}</strong></a>
+        </button>
+      %end
     %end
-    <form method="POST" action="/dodaj/">
-      <button class="button is-light">
-        <strong>DODAJ NOVO NALOGO</strong>
-      </button>
-    </p>
+  <form method="POST" action="/dodaj/">
+    <button class="button is-light">
+      <strong>DODAJ NOVO NALOGO</strong>
+    </button>
+
+  </form>
+  </p>
   <form method="POST">
     <div class="field">
         <label class="label">Ime</label>
         <div class="control has-icons-left has-icons-right">
-            <input class="input" name="ime" type="text" placeholder="ime naloge" value="{{polja.get('ime', '')}}">
+            <input class="input" name="ime" type="text" placeholder="ime naloge">
             <span class="icon is-small is-left">
                 <i class="fas fa-clipboard-check"></i>
             </span>
@@ -93,7 +101,7 @@
     <div class="field">
         <label class="label">Besedilo</label>
         <div class="control has-icons-left has-icons-right">
-            <input class="input" name="besedilo" type="text" placeholder="besedilo naloge" value="{{polja.get('besedilo', '')}}">
+            <input class="input" name="besedilo" type="text" placeholder="besedilo naloge">
             <span class="icon is-small is-left">
                 <i class="fas fa-clipboard-check"></i>
             </span>
@@ -102,7 +110,7 @@
     <div class="field">
         <label class="label">Resitev</label>
         <div class="control has-icons-left has-icons-right">
-            <input class="input" name="resitev" type="text" placeholder="resitev naloge" value="{{polja.get('resitev', '')}}">
+            <input class="input" name="resitev" type="text" placeholder="resitev naloge">
             <span class="icon is-small is-left">
                 <i class="fas fa-clipboard-check"></i>
             </span>
