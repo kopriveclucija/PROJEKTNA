@@ -19,6 +19,10 @@ class Model:
             "tema": self.tema,
         }
 
+
+    def stevilo_vseh_nalog(self):
+        return len(self.naloge)
+
     @staticmethod
     def iz_slovarja(slovar):
         sez = [
